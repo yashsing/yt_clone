@@ -58,8 +58,8 @@ const Signup = () => {
             Sign Up
           </button>
           <p>
-            Already a user please login
-          <Link to={"/login"}> Sign Up </Link>
+            Already a user please 
+          <Link to={"/login"} className="font-bold"> login </Link>
           </p>
           {error && (
             <p className="mt-4 text-red-500 text-sm text-center">
