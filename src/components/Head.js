@@ -23,6 +23,7 @@ const Head = () => {
   useEffect (() => {
     const query = new URLSearchParams(location.search).get("q");
     setSearchQuery(query);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); 
 
   useEffect(() => {
