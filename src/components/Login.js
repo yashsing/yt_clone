@@ -2,21 +2,33 @@ import React, { useState } from "react";
 import { auth } from "../firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../utils/authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const loginResp = await signInWithEmailAndPassword(auth, email, password);  // password; Ytest@123
+      const loginResp = await signInWithEmailAndPassword(auth, email, password); // password; Ytest@123
       if (loginResp) {
-        navigate("/")
-      } 
-      // Redirect or update the UI
+        const user = loginResp.user;
+
+        // Store the authentication token securely
+        const token = await user.getIdToken();
+        localStorage.setItem("authToken", token);
+
+        // Redirect to the protected page
+        dispatch(login());
+        navigate("/");
+      }
+
     } catch (err) {
       setError(err.message);
     }
@@ -28,7 +40,10 @@ const Login = () => {
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
         <form onSubmit={handleLogin} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
@@ -42,7 +57,10 @@ const Login = () => {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -63,11 +81,14 @@ const Login = () => {
           </button>
           <p>
             Not a registered user
-          <Link to={"/signup"} className="font-bold"> Sign Up </Link>
+            <Link to={"/signup"} className="font-bold">
+              {" "}
+              Sign Up{" "}
+            </Link>
           </p>
           {error && (
             <p className="mt-4 text-red-500 text-sm text-center">
-              {error}
+              Invalid Credentials
             </p>
           )}
         </form>

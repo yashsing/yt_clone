@@ -2,7 +2,7 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import { Outlet } from 'react-router-dom'
 
-export const Body = () => {
+export const Body = () => {     // named export 
   return (
     <div className='flex'>
       <Sidebar/> 
@@ -11,4 +11,4 @@ export const Body = () => {
   )
 }
 
-export default Body; 
+export default Body;      // default export 

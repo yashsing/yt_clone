@@ -25,7 +25,6 @@ function App() {
     return () => unsubscribe(); 
   }, []); 
 
-
   return (
     <Provider store={store}>
       <BrowserRouter>

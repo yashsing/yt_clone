@@ -7,19 +7,24 @@ import { CiSearch } from "react-icons/ci";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { MdKeyboardVoice } from "react-icons/md";
 import { CiBellOn } from "react-icons/ci";
-import { FaUser } from "react-icons/fa";
 import { cacheResults } from "../utils/searchSlice"; // Adjust the import path accordingly
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
 
+
+  const isLoggedIn = useSelector((store) => store.auth.isLoggedIn)
+
+
   const searchCache = useSelector((store) => store.search);
   const dispatch = useDispatch();
   const navigate = useNavigate(); // Initialize the navigate function
   const location = useLocation(); 
+
   useEffect (() => {
     const query = new URLSearchParams(location.search).get("q");
     setSearchQuery(query);
@@ -96,7 +101,8 @@ const Head = () => {
       {/* Header Center: Search Bar */}
       <div className="col-span-10 px-18 relative">
         <div className="flex items-center">
-          <input placeholder="Search"
+          <input
+            placeholder="Search"
             className="w-1/2 border border-gray-400 p-2 rounded-l-full h-10"
             type="text"
             value={searchQuery}
@@ -127,7 +133,9 @@ const Head = () => {
                     navigate(`/search?q=${encodeURIComponent(s)}`);
                   }}
                 >
-                <span><CiSearch className="text-2xl" /> {s} </span>
+                  <span>
+                    <CiSearch className="text-2xl" /> {s}{" "}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -135,13 +143,33 @@ const Head = () => {
         )}
       </div>
 
-      {/* Header Right: User Icon and Notifications */}
       <div className="col-span-1 flex items-center justify-end">
-        {/* <button className="mr-4 p-2" > */}
-        <Link to="/login" className="mr-4 p-2"> <FaUser className="text-2xl" /> </Link> 
-          {/* <FaUser className="text-2xl"  */}
-        {/* </button> */}
+        {/* <Link to="/login" className="mr-4 p-2"> <FaUser className="text-2xl" /> </Link>  */}
+        {isLoggedIn ? (
+          <button className="mr-4 p-2">
+            <FaUser className="text-2xl" />
+          </button>
+        ) : (
+          <Link to="/login" className="mr-4 p-2">
+            <button class="bg-white rounded-full px-4 py-2 text-blue-500 font-medium hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-300">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 inline-block mr-2"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0 7 7 0 01-14 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              Sign in
+            </button>
+          </Link>
+        )}
       </div>
+
       <button className="p-2 text-3xl">
         <CiBellOn />
       </button>
