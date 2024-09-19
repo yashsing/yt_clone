@@ -12,6 +12,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      window.location.href = "/login";
       // Redirect or update the UI
     } catch (err) {
       setError(err.message);
@@ -24,7 +25,10 @@ const Signup = () => {
         <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
         <form onSubmit={handleSignup} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
@@ -38,7 +42,10 @@ const Signup = () => {
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -58,13 +65,13 @@ const Signup = () => {
             Sign Up
           </button>
           <p>
-            Already a user please 
-          <Link to={"/login"} className="font-bold"> login </Link>
+            Already a user please ?
+            <Link to={"/login"} className="font-bold text-blue-500 underline">
+              login{" "}
+            </Link>
           </p>
           {error && (
-            <p className="mt-4 text-red-500 text-sm text-center">
-              {error}
-            </p>
+            <p className="mt-4 text-red-500 text-sm text-center">{error}</p>
           )}
         </form>
       </div>

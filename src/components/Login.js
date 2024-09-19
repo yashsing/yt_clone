@@ -28,7 +28,6 @@ const Login = () => {
         dispatch(login());
         navigate("/");
       }
-
     } catch (err) {
       setError(err.message);
     }
@@ -80,9 +79,8 @@ const Login = () => {
             Login
           </button>
           <p>
-            Not a registered user
-            <Link to={"/signup"} className="font-bold">
-              {" "}
+            Not a registered user ?
+            <Link to={"/signup"} className="font-bold text-blue-500 underline">
               Sign Up{" "}
             </Link>
           </p>

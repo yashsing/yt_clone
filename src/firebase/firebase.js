@@ -8,12 +8,12 @@ const firebaseConfig = {
   storageBucket: "clone-464c7.appspot.com",
   messagingSenderId: "880093142817",
   appId: "1:880093142817:web:f63ed863665d2ab90fa860",
-  measurementId: "G-YSJL39138Q"
+  measurementId: "G-YSJL39138Q",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app); 
+const auth = getAuth(app);
 // const analytics = getAnalytics(app);
 
-export {app, auth}; 
+export { app, auth };
